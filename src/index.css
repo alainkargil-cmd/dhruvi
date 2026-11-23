@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: #150804;
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, .font-serif {
+  font-family: 'Cinzel', 'Playfair Display', Georgia, serif;
+}
+
+.font-script {
+  font-family: 'Dancing Script', cursive;
+}
+
+/* Custom golden glow effects */
+.gold-glow {
+  text-shadow: 0 0 12px rgba(229, 193, 88, 0.6), 0 0 24px rgba(229, 193, 88, 0.3);
+}
+
+.gold-glow-box {
+  box-shadow: 0 0 25px rgba(229, 193, 88, 0.35), inset 0 0 15px rgba(229, 193, 88, 0.2);
+}
+
+.gold-border {
+  border: 1px solid rgba(229, 193, 88, 0.35);
+}
+
+.gold-gradient-text {
+  background: linear-gradient(135deg, #FFE494 0%, #E5C158 50%, #B89738 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.parchment-bg {
+  background: radial-gradient(circle at 50% 50%, #FAF6F0 0%, #EFE6DC 80%, #DFD3C3 100%);
+}
+
+/* Glassmorphism for fantasy UI */
+.fantasy-glass {
+  background: rgba(29, 12, 7, 0.78);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(229, 193, 88, 0.25);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), inset 0 0 15px rgba(229, 193, 88, 0.08);
+}
+
+.fantasy-button {
+  background: linear-gradient(135deg, rgba(78, 42, 30, 0.8) 0%, rgba(44, 24, 16, 0.9) 100%);
+  border: 1px solid rgba(229, 193, 88, 0.4);
+  color: #F5D77F;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(245, 215, 127, 0.2);
+}
+
+.fantasy-button:hover {
+  background: linear-gradient(135deg, rgba(95, 52, 38, 0.9) 0%, rgba(58, 30, 20, 1) 100%);
+  border-color: rgba(245, 215, 127, 0.8);
+  box-shadow: 0 0 20px rgba(229, 193, 88, 0.5), inset 0 1px 2px rgba(245, 215, 127, 0.4);
+  transform: translateY(-2px);
+  color: #FFF;
+}
+
+/* Prevent canvas drag-flicker */
+canvas {
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
