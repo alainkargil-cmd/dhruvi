@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000">
+    <defs>
+      <radialGradient id="bg" cx="50%" cy="50%" r="70%">
+        <stop offset="0%" stop-color="#FFF3E2"/>
+        <stop offset="100%" stop-color="#2C1810"/>
+      </radialGradient>
+      <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#FFE494"/>
+        <stop offset="50%" stop-color="#E5C158"/>
+        <stop offset="100%" stop-color="#9A7B2C"/>
+      </linearGradient>
+    </defs>
+    <rect width="800" height="1000" fill="url(#bg)"/>
+    <rect x="30" y="30" width="740" height="940" fill="none" stroke="url(#gold)" stroke-width="4" rx="12"/>
+    <rect x="45" y="45" width="710" height="910" fill="none" stroke="url(#gold)" stroke-width="1.5" stroke-dasharray="6,6" rx="8"/>
+    
+    <!-- Ornate Corners -->
+    <path d="M 60 100 L 60 60 L 100 60" fill="none" stroke="url(#gold)" stroke-width="3"/>
+    <path d="M 740 100 L 740 60 L 700 60" fill="none" stroke="url(#gold)" stroke-width="3"/>
+    <path d="M 60 900 L 60 940 L 100 940" fill="none" stroke="url(#gold)" stroke-width="3"/>
+    <path d="M 740 900 L 740 940 L 700 940" fill="none" stroke="url(#gold)" stroke-width="3"/>
+
+    <!-- Central Emblem -->
+    <circle cx="400" cy="420" r="140" fill="#E57C23" fill-opacity="0.2" stroke="url(#gold)" stroke-width="2"/>
+    <circle cx="400" cy="420" r="110" fill="none" stroke="url(#gold)" stroke-width="1" stroke-dasharray="4,4"/>
+    <text x="400" y="445" font-family="'Cinzel', serif" font-size="70" fill="url(#gold)" text-anchor="middle">✧</text>
+
+    <!-- Typography -->
+    <text x="400" y="650" font-family="'Cinzel', Georgia, serif" font-size="36" font-weight="bold" fill="#FAF6F0" text-anchor="middle" letter-spacing="3">Dhruvi — Portrait III</text>
+    <line x1="250" y1="680" x2="550" y2="680" stroke="url(#gold)" stroke-width="2"/>
+    <circle cx="400" cy="680" r="4" fill="#FFE494"/>
+    <text x="400" y="730" font-family="'Playfair Display', Georgia, serif" font-style="italic" font-size="24" fill="#E5C158" text-anchor="middle">Warmth & Radiance</text>
+    <text x="400" y="860" font-family="'Inter', sans-serif" font-size="16" fill="#A89F91" text-anchor="middle" letter-spacing="4">THE LIBRARY OF LITTLE MOMENTS</text>
+  </svg>
