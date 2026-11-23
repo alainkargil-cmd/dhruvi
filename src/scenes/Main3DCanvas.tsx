@@ -111,6 +111,8 @@ export const Main3DCanvas: React.FC<Main3DCanvasProps> = ({
                 minPolarAngle={Math.PI / 4}
                 maxPolarAngle={Math.PI / 2.1}
                 dampingFactor={0.05}
+                autoRotate={true}
+                autoRotateSpeed={0.25}
               />
 
               {/* Celebration Environment Lighting */}

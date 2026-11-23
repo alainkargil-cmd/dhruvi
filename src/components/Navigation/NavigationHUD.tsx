@@ -38,6 +38,8 @@ export const NavigationHUD: React.FC<NavigationHUDProps> = ({
   const [mapOpen, setMapOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
 
+  const [showHint, setShowHint] = useState(true);
+
   // Don't show full HUD during the introductory invitation screen
   if (currentScene === 'invitation') return null;
 
@@ -53,6 +55,61 @@ export const NavigationHUD: React.FC<NavigationHUDProps> = ({
     { id: 'final-letter', label: 'Birthday Letter', icon: <BookOpen size={14} /> },
   ];
 
+  const getSceneInstructions = (scene: ExperienceScene): { action: string; text: string } => {
+    switch (scene) {
+      case 'library':
+        return {
+          action: "Explore The Grand Library",
+          text: "✦ Click & drag to rotate view. Touch any glowing book, floating book, banker's lamp, globe, or desk drawer to discover secrets!"
+        };
+      case 'chapter-childhood':
+        return {
+          action: "Chapter I: The Little Beginning",
+          text: "✦ Click the golden antique frame to enlarge Dhruvi's childhood memory."
+        };
+      case 'chapter-solo':
+        return {
+          action: "Chapter II: Becoming Dhruvi",
+          text: "✦ Click any of the 3 portraits to view in full detail. Tap 'Next' to continue."
+        };
+      case 'chapter-friendship':
+        return {
+          action: "Chapter III: Our Little Chaos",
+          text: "✦ Click any Polaroid photograph to open. Enjoy the shared moments and laughter!"
+        };
+      case 'chapter-future':
+        return {
+          action: "Chapter IV: The Next Chapter",
+          text: "✦ Read the wishes for the journey ahead, then tap 'Enter The Magical Gift Room'."
+        };
+      case 'gift-room':
+        return {
+          action: "Magical Gift Room",
+          text: "✦ Click on each of the 4 gift boxes to open their presents in any order!"
+        };
+      case 'celebration-cake':
+        return {
+          action: "Birthday Cake Ceremony",
+          text: "🌬️ Blow into your microphone in real life (or tap the button) to extinguish the candles, then cut the first slice!"
+        };
+      case 'celebration-reveal':
+      case 'celebration-fireworks':
+        return {
+          action: "Fireworks Celebration",
+          text: "✦ Watch the sky as constellations and her name ignite in golden fireworks!"
+        };
+      case 'final-letter':
+        return {
+          action: "Final Birthday Letter",
+          text: "✦ Read the personal letter saved for Dhruvi. Replay the celebration whenever you wish."
+        };
+      default:
+        return { action: "Guide", text: "✦ Touch and interact with the environment." };
+    }
+  };
+
+  const instruction = getSceneInstructions(currentScene);
+
   return (
     <>
       {/* Top Bar Navigation */}
@@ -66,6 +123,18 @@ export const NavigationHUD: React.FC<NavigationHUDProps> = ({
 
         {/* Right Action Icons */}
         <div className="pointer-events-auto flex items-center gap-2">
+          {/* Instruction Toggle */}
+          <button
+            onClick={() => setShowHint(!showHint)}
+            className={`flex items-center gap-1.5 px-3 py-2 rounded-full fantasy-glass text-xs font-serif transition-all shadow-md ${
+              showHint ? 'text-[#FFE494] border-[#E5C158]' : 'text-[#F5D77F]'
+            }`}
+            title="Toggle Instructions"
+          >
+            <span className="text-xs">💡</span>
+            <span className="hidden md:inline">How To Play</span>
+          </button>
+
           {/* Chapter Guide / Map Button */}
           <button
             onClick={() => setMapOpen(true)}
@@ -95,6 +164,19 @@ export const NavigationHUD: React.FC<NavigationHUDProps> = ({
           </button>
         </div>
       </header>
+
+      {/* Persistent Animated Instruction Banner */}
+      {showHint && (
+        <div className="fixed top-14 sm:top-16 left-1/2 -translate-x-1/2 z-30 max-w-xl w-[92%] sm:w-auto px-4 py-2 rounded-full fantasy-glass border border-[#E5C158]/50 text-center shadow-[0_4px_25px_rgba(0,0,0,0.6)] pointer-events-auto flex items-center justify-center gap-2 animate-pulse-slow">
+          <span className="w-2 h-2 rounded-full bg-[#FFE494] shadow-[0_0_8px_#FFE494] shrink-0" />
+          <p className="text-[11px] sm:text-xs font-serif text-[#FAF6F0] leading-snug">
+            <span className="text-[#FFE494] font-bold uppercase tracking-wider mr-1.5">
+              [{instruction.action}]:
+            </span>
+            {instruction.text}
+          </p>
+        </div>
+      )}
 
       {/* Settings Dropdown */}
       {settingsOpen && (

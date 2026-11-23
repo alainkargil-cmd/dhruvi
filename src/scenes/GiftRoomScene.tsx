@@ -26,6 +26,8 @@ export const GiftRoomScene: React.FC<GiftRoomSceneProps> = ({
         minPolarAngle={Math.PI / 4}
         maxPolarAngle={Math.PI / 2.05}
         dampingFactor={0.05}
+        autoRotate={true}
+        autoRotateSpeed={0.35}
       />
 
       {/* Gift Room Decorated Floor */}

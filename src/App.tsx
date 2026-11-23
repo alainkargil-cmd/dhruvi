@@ -57,6 +57,9 @@ export default function App() {
 
   return (
     <div className="relative w-screen h-screen overflow-hidden bg-[#150804] text-[#FAF6F0] font-sans select-none">
+      {/* Cinematic Fantasy Vignette & Ambient Golden Atmospheric Glow */}
+      <div className="pointer-events-none fixed inset-0 z-20 shadow-[inset_0_0_130px_rgba(0,0,0,0.85)]" />
+      <div className="pointer-events-none fixed inset-0 z-20 bg-[radial-gradient(circle_at_50%_35%,transparent_35%,rgba(21,8,4,0.55)_100%)]" />
       {/* 1. Global Navigation HUD */}
       <NavigationHUD
         currentScene={currentScene}

@@ -33,7 +33,7 @@ export const LibraryScene: React.FC<LibrarySceneProps> = ({
 }) => {
   return (
     <>
-      {/* Controlled Orbit Camera with Damping */}
+      {/* Controlled Orbit Camera with Damping and Cinematic Slow Auto-Orbit */}
       <OrbitControls
         enablePan={false}
         enableZoom={true}
@@ -42,6 +42,8 @@ export const LibraryScene: React.FC<LibrarySceneProps> = ({
         minPolarAngle={Math.PI / 4}
         maxPolarAngle={Math.PI / 2.05}
         dampingFactor={0.05}
+        autoRotate={true}
+        autoRotateSpeed={0.35}
       />
 
       {/* Main 3D Architecture */}
