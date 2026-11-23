@@ -67,6 +67,11 @@ export interface BirthdayConfig {
       warningText: string;
       buttonText: string;
       videoUrl: string;
+      videos?: {
+        url: string;
+        title?: string;
+        caption?: string;
+      }[];
       afterText: string;
     };
     memories: {
@@ -219,6 +224,18 @@ export const birthdayConfig: BirthdayConfig = {
       warningText: "WARNING: A highly classified funny memory has been discovered!",
       buttonText: "REVEAL THE EVIDENCE",
       videoUrl: "./assets/videos/funny-filter-video.mp4",
+      videos: [
+        {
+          url: "./assets/videos/funny-filter-video.mp4",
+          title: "Act I: The Incriminating Evidence",
+          caption: "Some people are naturally funny..."
+        },
+        {
+          url: "./assets/videos/funny-filter-video-2.mp4",
+          title: "Act II: The Chaos Continues",
+          caption: "...others just need the right filter!"
+        }
+      ],
       afterText: "Some people are naturally funny. Others just need the right filter.",
     },
 

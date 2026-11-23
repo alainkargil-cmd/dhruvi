@@ -24,7 +24,15 @@ export const GiftModal: React.FC<GiftModalProps> = ({
   const [selectedWishIndex, setSelectedWishIndex] = useState<number | null>(null);
   const [videoError, setVideoError] = useState(false);
 
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+
   if (!giftId) return null;
+
+  const videoList = config.gifts.laughter.videos && config.gifts.laughter.videos.length > 0
+    ? config.gifts.laughter.videos
+    : [{ url: config.gifts.laughter.videoUrl, title: "Funny Memory", caption: config.gifts.laughter.afterText }];
+
+  const currentVideo = videoList[currentVideoIndex] || videoList[0];
 
   return (
     <AnimatePresence>
@@ -52,7 +60,7 @@ export const GiftModal: React.FC<GiftModalProps> = ({
           </button>
 
           {/* ============================================================== */}
-          {/* GIFT 1: THE GIFT OF LAUGHTER */}
+          {/* GIFT 1: THE GIFT OF LAUGHTER (SEQUENTIAL VIDEO PLAYBACK) */}
           {/* ============================================================== */}
           {giftId === 'gift-laughter' && (
             <div className="w-full flex flex-col items-center text-center">
@@ -72,7 +80,7 @@ export const GiftModal: React.FC<GiftModalProps> = ({
                     {config.gifts.laughter.warningText}
                   </p>
                   <p className="text-xs text-[#FAF6F0]/70 max-w-sm mb-6">
-                    A strictly unverified, highly affectionate recorded memory of pure fun.
+                    A strictly unverified, highly affectionate recorded memory sequence of pure fun.
                   </p>
                   <button
                     onClick={() => {
@@ -86,39 +94,117 @@ export const GiftModal: React.FC<GiftModalProps> = ({
                   </button>
                 </div>
               ) : (
-                <div className="w-full flex flex-col items-center mt-3">
+                <div className="w-full flex flex-col items-center mt-2">
+                  {/* Playlist Header & Indicator if multiple videos */}
+                  {videoList.length > 1 && (
+                    <div className="flex items-center justify-between w-full mb-3 px-2">
+                      <span className="text-xs font-serif text-[#F5D77F] font-semibold flex items-center gap-1.5">
+                        <Sparkles size={14} className="text-[#FFE494]" />
+                        {currentVideo.title || `Memory Part ${currentVideoIndex + 1}`}
+                      </span>
+                      <div className="flex items-center gap-1.5">
+                        {videoList.map((_, idx) => (
+                          <button
+                            key={idx}
+                            onClick={() => {
+                              setVideoError(false);
+                              setCurrentVideoIndex(idx);
+                            }}
+                            className={`w-7 h-7 rounded-full text-xs font-bold transition-all border ${
+                              currentVideoIndex === idx
+                                ? 'bg-[#E5C158] text-[#1D0C07] border-[#FFE494] shadow-[0_0_10px_#FFE494]'
+                                : 'bg-[#2C1810] text-[#FAF6F0]/70 border-[#E5C158]/30 hover:border-[#E5C158]'
+                            }`}
+                          >
+                            {idx + 1}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Video Player Container */}
                   <div className="relative w-full aspect-video max-h-[50vh] rounded-xl overflow-hidden border-2 border-[#E5C158] bg-[#150804] shadow-2xl flex items-center justify-center">
                     {!videoError ? (
                       <video
-                        src={config.gifts.laughter.videoUrl}
+                        key={currentVideo.url}
+                        src={currentVideo.url}
                         controls
                         autoPlay
+                        onEnded={() => {
+                          // Automatic sequence: advance to next video if available
+                          if (currentVideoIndex < videoList.length - 1) {
+                            setTimeout(() => {
+                              setCurrentVideoIndex((prev) => prev + 1);
+                            }, 500);
+                          }
+                        }}
                         className="w-full h-full object-contain"
                         onError={() => setVideoError(true)}
                       />
                     ) : (
                       // Interactive playful funny-filter fallback simulation
                       <div className="relative w-full h-full flex flex-col items-center justify-center bg-gradient-to-b from-[#2C1810] to-[#150804] p-6 text-center">
-                        <div className="text-5xl animate-bounce mb-3">✨🥸✨</div>
+                        <div className="text-5xl animate-bounce mb-3">
+                          {currentVideoIndex === 0 ? '✨🥸✨' : '🤪🎉✨'}
+                        </div>
                         <p className="text-sm font-serif text-[#F5D77F] font-bold mb-1">
-                          [Funny-Filter Video Surprise Ready]
+                          [{currentVideo.title || `Video Part ${currentVideoIndex + 1}`}]
                         </p>
                         <p className="text-xs text-[#FAF6F0]/80 max-w-md">
-                          Place your video file in <code className="text-[#FFE494]">public/assets/videos/funny-filter-video.mp4</code> to watch the real surprise live!
+                          Place video at <code className="text-[#FFE494]">{currentVideo.url}</code>
                         </p>
-                        <div className="mt-4 flex gap-2">
-                          {['🤪', '🎉', '✨', '📸'].map((emoji, i) => (
-                            <span key={i} className="text-2xl animate-pulse">
-                              {emoji}
-                            </span>
-                          ))}
-                        </div>
+                        {videoList.length > 1 && (
+                          <button
+                            onClick={() => {
+                              setVideoError(false);
+                              setCurrentVideoIndex((prev) => (prev + 1) % videoList.length);
+                            }}
+                            className="mt-3 px-4 py-1.5 rounded-full bg-[#3B2219] border border-[#E5C158] text-[#F5D77F] text-xs hover:bg-[#4E2A1E] transition-all"
+                          >
+                            Switch to {currentVideoIndex === 0 ? 'Video 2' : 'Video 1'}
+                          </button>
+                        )}
                       </div>
                     )}
                   </div>
-                  <p className="mt-4 text-xs font-script text-[#F5D77F] text-lg">
-                    "{config.gifts.laughter.afterText}"
-                  </p>
+
+                  {/* Captions and Navigation Controls */}
+                  <div className="flex items-center justify-between w-full mt-3">
+                    <button
+                      disabled={currentVideoIndex === 0}
+                      onClick={() => {
+                        setVideoError(false);
+                        setCurrentVideoIndex((prev) => Math.max(0, prev - 1));
+                      }}
+                      className={`px-3 py-1.5 rounded-lg text-xs font-serif border ${
+                        currentVideoIndex === 0
+                          ? 'opacity-30 border-transparent cursor-not-allowed'
+                          : 'bg-[#2C1810] border-[#E5C158]/40 text-[#F5D77F] hover:bg-[#3B2219]'
+                      }`}
+                    >
+                      ← Previous Video
+                    </button>
+
+                    <p className="text-xs font-script text-[#F5D77F] text-base px-2">
+                      "{currentVideo.caption || config.gifts.laughter.afterText}"
+                    </p>
+
+                    <button
+                      disabled={currentVideoIndex >= videoList.length - 1}
+                      onClick={() => {
+                        setVideoError(false);
+                        setCurrentVideoIndex((prev) => Math.min(videoList.length - 1, prev + 1));
+                      }}
+                      className={`px-3 py-1.5 rounded-lg text-xs font-serif border ${
+                        currentVideoIndex >= videoList.length - 1
+                          ? 'opacity-30 border-transparent cursor-not-allowed'
+                          : 'bg-[#2C1810] border-[#E5C158]/40 text-[#F5D77F] hover:bg-[#3B2219]'
+                      }`}
+                    >
+                      Next Video →
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
