@@ -59,8 +59,8 @@ export const LibraryArchitecture: React.FC<LibraryArchitectureProps> = ({
       <mesh position={[0, -0.05, 0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
         <planeGeometry args={[26, 26]} />
         <meshStandardMaterial
-          color="#1A0D08" // Deep Walnut
-          roughness={0.35}
+          color="#2E1812" // Warm Polished Walnut
+          roughness={0.32}
           metalness={0.2}
         />
       </mesh>
@@ -389,18 +389,24 @@ export const LibraryArchitecture: React.FC<LibraryArchitectureProps> = ({
           );
         })}
         {/* Warm Chandelier Point Light */}
-        <pointLight color="#FFE494" distance={16} intensity={2.2} />
+        <pointLight color="#FFE494" distance={18} intensity={3.4} />
       </group>
 
       {/* Warm Ambient Sunlight Stream from Left Window */}
       <directionalLight
         position={[-12, 10, -3]}
-        color="#FFEAA7"
-        intensity={1.6}
+        color="#FFF2CC"
+        intensity={2.2}
         castShadow
       />
-      {/* Soft Fill Light */}
-      <ambientLight color="#3A1E14" intensity={0.85} />
+      {/* Soft Warm Fill Light */}
+      <directionalLight
+        position={[10, 8, 6]}
+        color="#FFDDBB"
+        intensity={1.2}
+      />
+      {/* Luminous Ambient Light */}
+      <ambientLight color="#FFF0DF" intensity={1.55} />
     </group>
   );
 };

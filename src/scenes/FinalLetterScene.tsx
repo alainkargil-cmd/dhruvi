@@ -18,7 +18,7 @@ export const FinalLetterScene: React.FC<FinalLetterSceneProps> = ({
   const { finalLetter } = config;
 
   return (
-    <div className="relative w-full h-full flex items-center justify-center p-4 sm:p-8 bg-[#150804]/95 backdrop-blur-2xl overflow-y-auto select-none">
+    <div className="relative w-full h-full flex items-center justify-center p-4 sm:p-8 bg-gradient-to-br from-[#27121E]/95 via-[#351829]/95 to-[#200E19]/95 backdrop-blur-2xl overflow-y-auto select-none">
       {/* Antique Parchment Letter Container */}
       <motion.div
         initial={{ opacity: 0, scale: 0.9, y: 30 }}

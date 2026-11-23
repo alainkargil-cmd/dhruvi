@@ -76,7 +76,7 @@ export const BirthdayCelebrationScene: React.FC<BirthdayCelebrationSceneProps> =
                 </h3>
 
                 {/* Real-life Blowing Instruction Highlight */}
-                <div className="my-4 p-4 rounded-2xl bg-[#2C1810]/90 border border-[#E5C158]/50 shadow-inner flex flex-col items-center w-full">
+                <div className="my-4 p-4 rounded-2xl bg-[#3D1E28]/90 border border-[#E5C158]/50 shadow-inner flex flex-col items-center w-full">
                   <div className="flex items-center gap-2 text-xs font-serif font-bold text-[#F5D77F] mb-1">
                     <Wind size={18} className="text-[#FFE494] animate-pulse" />
                     <span>BLOW IN REAL LIFE!</span>

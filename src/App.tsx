@@ -56,10 +56,10 @@ export default function App() {
     currentScene.startsWith('celebration');
 
   return (
-    <div className="relative w-screen h-screen overflow-hidden bg-[#150804] text-[#FAF6F0] font-sans select-none">
-      {/* Cinematic Fantasy Vignette & Ambient Golden Atmospheric Glow */}
-      <div className="pointer-events-none fixed inset-0 z-20 shadow-[inset_0_0_130px_rgba(0,0,0,0.85)]" />
-      <div className="pointer-events-none fixed inset-0 z-20 bg-[radial-gradient(circle_at_50%_35%,transparent_35%,rgba(21,8,4,0.55)_100%)]" />
+    <div className="relative w-screen h-screen overflow-hidden bg-gradient-to-br from-[#24111D] via-[#331726] to-[#1E0D17] text-[#FAF6F0] font-sans select-none">
+      {/* Warm Cinematic Rose-Gold & Champagne Ambient Vignette */}
+      <div className="pointer-events-none fixed inset-0 z-20 shadow-[inset_0_0_90px_rgba(30,10,20,0.45)]" />
+      <div className="pointer-events-none fixed inset-0 z-20 bg-[radial-gradient(circle_at_50%_35%,rgba(255,228,148,0.12)_0%,transparent_65%)]" />
       {/* 1. Global Navigation HUD */}
       <NavigationHUD
         currentScene={currentScene}

@@ -22,7 +22,7 @@ export const StoryChapters: React.FC<StoryChaptersProps> = ({
   const { childhood, solo, friendship, future } = config.chapters;
 
   return (
-    <div className="relative w-full h-full flex flex-col items-center justify-between p-4 sm:p-8 bg-[#150804]/90 backdrop-blur-xl overflow-y-auto select-none">
+    <div className="relative w-full h-full flex flex-col items-center justify-between p-4 sm:p-8 bg-gradient-to-br from-[#27121E]/95 via-[#351829]/95 to-[#200E19]/95 backdrop-blur-xl overflow-y-auto select-none">
       {/* Top Header Navigation */}
       <div className="w-full max-w-4xl flex items-center justify-between mb-4 z-20">
         <button

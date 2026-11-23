@@ -134,7 +134,7 @@ export const birthdayConfig: BirthdayConfig = {
   invitation: {
     greeting: "Dear Dhruvi,",
     body: "Some stories deserve a special place.\n\nTonight, I have saved one just for you.",
-    buttonText: "ENTER THE LIBRARY",
+    buttonText: "Step Into The Magical Library",
   },
 
   chapters: {

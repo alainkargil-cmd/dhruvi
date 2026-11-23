@@ -137,8 +137,9 @@ export const GiftRoomScene: React.FC<GiftRoomSceneProps> = ({
       </group>
 
       {/* Chandelier & Ambient Lights */}
-      <pointLight position={[0, 6, 0]} color="#FFE494" distance={14} intensity={2.4} />
-      <ambientLight color="#2C1810" intensity={0.9} />
+      <pointLight position={[0, 6, 0]} color="#FFE494" distance={16} intensity={3.5} />
+      <directionalLight position={[0, 7, 5]} color="#FFF2DD" intensity={1.5} />
+      <ambientLight color="#FFF0DF" intensity={1.5} />
 
       {/* Floating Butterflies & Golden Sparkles */}
       <MagicalButterfly initialPosition={[0, 3, 0]} color="#F5D77F" radius={3} speed={1.1} />
