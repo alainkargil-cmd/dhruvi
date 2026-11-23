@@ -230,19 +230,21 @@ export const GiftModal: React.FC<GiftModalProps> = ({
                   return (
                     <div
                       onClick={() => onOpenPhoto(activePhoto)}
-                      className="group cursor-pointer flex flex-col items-center bg-[#FAF6F0] text-[#1D0C07] p-3 rounded-lg shadow-xl hover:rotate-0 transition-transform duration-300 max-w-sm"
+                      className="group cursor-pointer flex flex-col items-center bg-[#FAF6F0] text-[#1D0C07] p-4 rounded-2xl shadow-xl hover:rotate-0 transition-transform duration-300 max-w-md w-full"
                       style={{ transform: `rotate(${activePhoto.rotation || 0}deg)` }}
                     >
-                      <img
-                        src={activePhoto.url}
-                        alt="Friendship Scrapbook Moment"
-                        className="w-full h-56 object-cover rounded border border-neutral-300"
-                      />
-                      <p className="mt-2 font-script text-lg text-[#3B2219]">
+                      <div className="w-full h-72 sm:h-80 rounded-xl overflow-hidden bg-neutral-100 flex items-center justify-center p-1 border border-neutral-200">
+                        <img
+                          src={activePhoto.url}
+                          alt="Friendship Scrapbook Moment"
+                          className="w-full h-full object-contain rounded-lg"
+                        />
+                      </div>
+                      <p className="mt-3 font-script text-xl text-[#3B2219]">
                         {activePhoto.caption}
                       </p>
-                      <span className="text-[10px] text-neutral-500 uppercase tracking-widest">
-                        Click to Enlarge
+                      <span className="text-[10px] text-[#B89738] font-serif uppercase tracking-widest mt-1">
+                        ✦ Click to Enlarge ✦
                       </span>
                     </div>
                   );
@@ -348,17 +350,17 @@ export const GiftModal: React.FC<GiftModalProps> = ({
               {/* Hidden Photo Revealed in Royal Golden Frame */}
               <div
                 onClick={() => onOpenPhoto(config.gifts.mystery.photo)}
-                className="cursor-pointer group relative my-4 max-w-md w-full rounded-2xl overflow-hidden border-2 border-[#E5C158] shadow-[0_0_35px_rgba(229,193,88,0.4)] bg-[#150804] p-3 transition-transform duration-300 hover:scale-[1.02]"
+                className="cursor-pointer group relative my-4 max-w-xl w-full rounded-2xl overflow-hidden border-2 border-[#E5C158] shadow-[0_0_45px_rgba(229,193,88,0.45)] bg-[#2C1422] p-3.5 sm:p-4 transition-transform duration-300 hover:scale-[1.01]"
               >
-                <div className="relative overflow-hidden rounded-xl">
+                <div className="relative overflow-hidden rounded-xl bg-black/30 flex items-center justify-center p-1">
                   <img
                     src={config.gifts.mystery.photo.url}
                     alt="Mystery Group Photograph"
-                    className="w-full max-h-72 object-cover rounded-lg"
+                    className="w-full max-h-[460px] object-contain rounded-lg"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end justify-center p-3">
-                    <span className="text-xs font-serif text-[#FFE494] uppercase tracking-widest flex items-center gap-1">
-                      <Sparkles size={12} /> Click to Enlarge Full View
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center p-3">
+                    <span className="text-xs font-serif text-[#FFE494] uppercase tracking-widest flex items-center gap-1 bg-black/60 px-3 py-1 rounded-full border border-[#E5C158]/50">
+                      <Sparkles size={12} /> Click to View High-Res Fullscreen
                     </span>
                   </div>
                 </div>

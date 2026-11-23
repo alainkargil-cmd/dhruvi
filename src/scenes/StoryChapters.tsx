@@ -59,17 +59,17 @@ export const StoryChapters: React.FC<StoryChaptersProps> = ({
           {/* Golden Frame with Childhood Photo */}
           <div
             onClick={() => onOpenPhoto(childhood.photo)}
-            className="cursor-pointer group relative p-3 sm:p-4 rounded-2xl bg-[#2C1810] border-2 border-[#E5C158] shadow-[0_0_40px_rgba(229,193,88,0.35)] transition-transform duration-300 hover:scale-105 max-w-sm w-full"
+            className="cursor-pointer group relative p-4 sm:p-5 rounded-2xl bg-[#351829] border-2 border-[#E5C158] shadow-[0_0_50px_rgba(229,193,88,0.4)] transition-transform duration-300 hover:scale-[1.02] max-w-xl w-full"
           >
-            <div className="relative rounded-xl overflow-hidden bg-[#150804]">
+            <div className="relative rounded-xl overflow-hidden bg-black/30 p-1 flex items-center justify-center">
               <img
                 src={childhood.photo.url}
                 alt="Dhruvi Childhood Memory"
-                className="w-full h-80 object-cover rounded-lg"
+                className="w-full max-h-[460px] object-contain rounded-lg"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end justify-center p-3">
-                <span className="text-[11px] font-serif text-[#FFE494] uppercase tracking-widest">
-                  Click to Enlarge
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center p-3">
+                <span className="text-xs font-serif text-[#FFE494] uppercase tracking-widest bg-black/60 px-3 py-1 rounded-full border border-[#E5C158]/50">
+                  ✦ Click to View High-Res Fullscreen ✦
                 </span>
               </div>
             </div>
@@ -96,7 +96,7 @@ export const StoryChapters: React.FC<StoryChaptersProps> = ({
           initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="max-w-4xl w-full flex flex-col items-center text-center my-auto"
+          className="max-w-5xl w-full flex flex-col items-center text-center my-auto"
         >
           <span className="text-xs font-serif tracking-widest uppercase text-[#9B8EA9] mb-2 flex items-center gap-1.5">
             <Sparkles size={14} /> Chapter II ✦ {solo.theme}
@@ -109,18 +109,20 @@ export const StoryChapters: React.FC<StoryChaptersProps> = ({
           </p>
 
           {/* 3 Solo Portraits: Central Large Portrait with Left and Right Floating Frames */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 w-full my-4 items-center">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full my-4 items-center">
             {/* Left Photo */}
             <div
               onClick={() => onOpenPhoto(solo.photos[1])}
-              className="cursor-pointer group p-3 rounded-2xl bg-[#2C1810] border border-[#E5C158]/50 shadow-xl hover:scale-105 transition-all"
+              className="cursor-pointer group p-3.5 sm:p-4 rounded-2xl bg-[#351829] border border-[#E5C158]/60 shadow-xl hover:scale-105 transition-all flex flex-col items-center"
             >
-              <img
-                src={solo.photos[1].url}
-                alt="Dhruvi Solo 2"
-                className="w-full h-64 object-cover rounded-xl"
-              />
-              <p className="mt-2 text-xs font-serif text-[#F5D77F] italic">
+              <div className="w-full h-80 sm:h-96 rounded-xl overflow-hidden bg-black/25 flex items-center justify-center p-1">
+                <img
+                  src={solo.photos[1].url}
+                  alt="Dhruvi Solo 2"
+                  className="w-full h-full object-contain rounded-lg"
+                />
+              </div>
+              <p className="mt-2.5 text-xs font-serif text-[#F5D77F] italic">
                 "{solo.photos[1].caption}"
               </p>
             </div>
@@ -128,14 +130,16 @@ export const StoryChapters: React.FC<StoryChaptersProps> = ({
             {/* Central Main Portrait */}
             <div
               onClick={() => onOpenPhoto(solo.photos[0])}
-              className="cursor-pointer group p-4 rounded-2xl bg-[#3B2219] border-2 border-[#E5C158] shadow-[0_0_35px_rgba(229,193,88,0.4)] hover:scale-105 transition-all md:-translate-y-2"
+              className="cursor-pointer group p-4 sm:p-5 rounded-2xl bg-[#441E34] border-2 border-[#E5C158] shadow-[0_0_40px_rgba(229,193,88,0.45)] hover:scale-105 transition-all md:-translate-y-2 flex flex-col items-center"
             >
-              <img
-                src={solo.photos[0].url}
-                alt="Dhruvi Solo 1"
-                className="w-full h-72 object-cover rounded-xl"
-              />
-              <p className="mt-2 text-sm font-serif font-semibold text-[#FFE494]">
+              <div className="w-full h-88 sm:h-[420px] rounded-xl overflow-hidden bg-black/25 flex items-center justify-center p-1">
+                <img
+                  src={solo.photos[0].url}
+                  alt="Dhruvi Solo 1"
+                  className="w-full h-full object-contain rounded-lg"
+                />
+              </div>
+              <p className="mt-3 text-sm font-serif font-semibold text-[#FFE494]">
                 "{solo.photos[0].caption}"
               </p>
             </div>
@@ -143,14 +147,16 @@ export const StoryChapters: React.FC<StoryChaptersProps> = ({
             {/* Right Photo */}
             <div
               onClick={() => onOpenPhoto(solo.photos[2])}
-              className="cursor-pointer group p-3 rounded-2xl bg-[#2C1810] border border-[#E5C158]/50 shadow-xl hover:scale-105 transition-all"
+              className="cursor-pointer group p-3.5 sm:p-4 rounded-2xl bg-[#351829] border border-[#E5C158]/60 shadow-xl hover:scale-105 transition-all flex flex-col items-center"
             >
-              <img
-                src={solo.photos[2].url}
-                alt="Dhruvi Solo 3"
-                className="w-full h-64 object-cover rounded-xl"
-              />
-              <p className="mt-2 text-xs font-serif text-[#F5D77F] italic">
+              <div className="w-full h-80 sm:h-96 rounded-xl overflow-hidden bg-black/25 flex items-center justify-center p-1">
+                <img
+                  src={solo.photos[2].url}
+                  alt="Dhruvi Solo 3"
+                  className="w-full h-full object-contain rounded-lg"
+                />
+              </div>
+              <p className="mt-2.5 text-xs font-serif text-[#F5D77F] italic">
                 "{solo.photos[2].caption}"
               </p>
             </div>
@@ -177,7 +183,7 @@ export const StoryChapters: React.FC<StoryChaptersProps> = ({
           initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="max-w-3xl w-full flex flex-col items-center text-center my-auto"
+          className="max-w-5xl w-full flex flex-col items-center text-center my-auto"
         >
           <span className="text-xs font-serif tracking-widest uppercase text-[#C88A85] mb-2 flex items-center gap-1.5">
             <Sparkles size={14} /> Chapter III ✦ {friendship.theme}
@@ -190,25 +196,27 @@ export const StoryChapters: React.FC<StoryChaptersProps> = ({
           </p>
 
           {/* Hanging Photos & Scrapbook Wall */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 w-full my-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 w-full my-4">
             {friendship.photos.map((photo, idx) => (
               <div
                 key={photo.id}
                 onClick={() => onOpenPhoto(photo)}
-                className={`cursor-pointer group p-4 rounded-xl bg-[#FAF6F0] text-[#1D0C07] shadow-2xl transition-all duration-300 hover:scale-105 ${
-                  idx === 0 ? '-rotate-2' : 'rotate-2'
+                className={`cursor-pointer group p-4 sm:p-5 rounded-2xl bg-[#FFFDF9] text-[#1D0C07] shadow-2xl transition-all duration-300 hover:scale-105 flex flex-col items-center ${
+                  idx === 0 ? '-rotate-1.5' : idx === 1 ? 'rotate-1' : '-rotate-1'
                 }`}
               >
-                <img
-                  src={photo.url}
-                  alt={photo.caption}
-                  className="w-full h-56 object-cover rounded-lg border border-neutral-300"
-                />
+                <div className="w-full h-72 sm:h-80 rounded-xl overflow-hidden bg-amber-50/70 border border-neutral-200 flex items-center justify-center p-1">
+                  <img
+                    src={photo.url}
+                    alt={photo.caption}
+                    className="w-full h-full object-contain rounded-lg"
+                  />
+                </div>
                 <p className="mt-3 font-script text-xl text-[#3B2219]">
                   "{photo.caption}"
                 </p>
-                <span className="text-[10px] uppercase tracking-widest text-neutral-500">
-                  Click to Enlarge
+                <span className="text-[10px] uppercase tracking-widest text-[#B89738] font-serif mt-1">
+                  ✦ Click for High-Res View ✦
                 </span>
               </div>
             ))}

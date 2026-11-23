@@ -26,12 +26,12 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({ photo, onClose }) => {
           exit={{ scale: 0.88, y: 20, opacity: 0 }}
           transition={{ type: 'spring', damping: 25, stiffness: 220 }}
           onClick={(e) => e.stopPropagation()}
-          className="relative max-w-2xl w-full bg-[#1D0C07] border border-[#E5C158]/50 rounded-2xl p-4 sm:p-6 shadow-[0_0_50px_rgba(229,193,88,0.25)] flex flex-col items-center"
+          className="relative max-w-4xl sm:max-w-5xl w-full bg-gradient-to-br from-[#2F1525] via-[#240F1D] to-[#1C0A16] border-2 border-[#E5C158]/70 rounded-3xl p-4 sm:p-7 shadow-[0_0_60px_rgba(229,193,88,0.35)] flex flex-col items-center"
         >
           {/* Close Button */}
           <button
             onClick={onClose}
-            className="absolute -top-3 -right-3 w-10 h-10 rounded-full bg-[#2C1810] border border-[#E5C158] text-[#F5D77F] hover:text-white hover:bg-[#3B2219] flex items-center justify-center transition-all shadow-lg z-10"
+            className="absolute -top-3 -right-3 w-10 h-10 rounded-full bg-[#3D1E2D] border-2 border-[#E5C158] text-[#F5D77F] hover:text-white hover:bg-[#52253D] flex items-center justify-center transition-all shadow-lg z-10"
           >
             <X size={20} />
           </button>
@@ -40,17 +40,17 @@ export const PhotoModal: React.FC<PhotoModalProps> = ({ photo, onClose }) => {
           <div className="flex items-center gap-2 mb-3 text-[#E5C158]">
             <Sparkles size={16} className="animate-spin text-[#FFE494]" />
             <span className="text-xs tracking-widest uppercase font-serif">
-              The Library of Little Moments
+              The Library of Little Moments ✦ High-Res View
             </span>
             <Sparkles size={16} className="animate-spin text-[#FFE494]" />
           </div>
 
           {/* Image Container */}
-          <div className="relative w-full max-h-[70vh] flex items-center justify-center overflow-hidden rounded-xl bg-[#150804] border border-[#E5C158]/30 p-2 shadow-inner">
+          <div className="relative w-full max-h-[82vh] flex items-center justify-center overflow-hidden rounded-2xl bg-black/40 border border-[#E5C158]/30 p-2 sm:p-3 shadow-inner">
             <img
               src={photo.url}
               alt={photo.caption}
-              className="max-h-[65vh] w-auto max-w-full object-contain rounded-lg transition-transform duration-300 hover:scale-[1.02]"
+              className="max-h-[76vh] w-auto max-w-full object-contain rounded-xl transition-transform duration-300 hover:scale-[1.01]"
               onError={(e) => {
                 // Fallback to stylized SVG placeholder if file is not found
                 const target = e.target as HTMLImageElement;
