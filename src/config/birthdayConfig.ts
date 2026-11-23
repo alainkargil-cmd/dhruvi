@@ -200,6 +200,12 @@ export const birthdayConfig: BirthdayConfig = {
           caption: "Pressed into the pages of our favourite scrapbook.",
           rotation: 3,
         },
+        {
+          id: "friends-03",
+          url: "./assets/photos/friends-03.jpg",
+          caption: "Moments made golden with the best company.",
+          rotation: -2,
+        },
       ],
     },
 

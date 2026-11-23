@@ -224,52 +224,40 @@ export const GiftModal: React.FC<GiftModalProps> = ({
 
               {/* Scrapbook Container */}
               <div className="w-full my-4 p-5 rounded-2xl bg-[#26160F] border border-[#E5C158]/40 shadow-inner flex flex-col items-center">
-                {scrapbookPage === 0 ? (
-                  <div
-                    onClick={() => onOpenPhoto(config.chapters.friendship.photos[0])}
-                    className="group cursor-pointer flex flex-col items-center bg-[#FAF6F0] text-[#1D0C07] p-3 rounded-lg shadow-xl -rotate-2 hover:rotate-0 transition-transform duration-300 max-w-sm"
-                  >
-                    <img
-                      src={config.chapters.friendship.photos[0].url}
-                      alt="Friendship Moment 1"
-                      className="w-full h-56 object-cover rounded border border-neutral-300"
-                    />
-                    <p className="mt-2 font-script text-lg text-[#3B2219]">
-                      {config.chapters.friendship.photos[0].caption}
-                    </p>
-                    <span className="text-[10px] text-neutral-500 uppercase tracking-widest">
-                      Click to Enlarge
-                    </span>
-                  </div>
-                ) : (
-                  <div
-                    onClick={() => onOpenPhoto(config.chapters.friendship.photos[1])}
-                    className="group cursor-pointer flex flex-col items-center bg-[#FAF6F0] text-[#1D0C07] p-3 rounded-lg shadow-xl rotate-2 hover:rotate-0 transition-transform duration-300 max-w-sm"
-                  >
-                    <img
-                      src={config.chapters.friendship.photos[1].url}
-                      alt="Friendship Moment 2"
-                      className="w-full h-56 object-cover rounded border border-neutral-300"
-                    />
-                    <p className="mt-2 font-script text-lg text-[#3B2219]">
-                      {config.chapters.friendship.photos[1].caption}
-                    </p>
-                    <span className="text-[10px] text-neutral-500 uppercase tracking-widest">
-                      Click to Enlarge
-                    </span>
-                  </div>
-                )}
+                {(() => {
+                  const photos = config.chapters.friendship.photos;
+                  const activePhoto = photos[scrapbookPage % photos.length];
+                  return (
+                    <div
+                      onClick={() => onOpenPhoto(activePhoto)}
+                      className="group cursor-pointer flex flex-col items-center bg-[#FAF6F0] text-[#1D0C07] p-3 rounded-lg shadow-xl hover:rotate-0 transition-transform duration-300 max-w-sm"
+                      style={{ transform: `rotate(${activePhoto.rotation || 0}deg)` }}
+                    >
+                      <img
+                        src={activePhoto.url}
+                        alt="Friendship Scrapbook Moment"
+                        className="w-full h-56 object-cover rounded border border-neutral-300"
+                      />
+                      <p className="mt-2 font-script text-lg text-[#3B2219]">
+                        {activePhoto.caption}
+                      </p>
+                      <span className="text-[10px] text-neutral-500 uppercase tracking-widest">
+                        Click to Enlarge
+                      </span>
+                    </div>
+                  );
+                })()}
 
                 {/* Page Flip Controls */}
                 <div className="flex items-center gap-4 mt-6">
                   <button
                     onClick={() => {
                       soundManager.playPageTurn();
-                      setScrapbookPage((prev) => (prev === 0 ? 1 : 0));
+                      setScrapbookPage((prev) => (prev + 1) % config.chapters.friendship.photos.length);
                     }}
-                    className="px-4 py-2 rounded-full bg-[#3B2219] border border-[#E5C158]/50 text-[#F5D77F] text-xs uppercase tracking-wider hover:bg-[#4E2A1E] transition-all flex items-center gap-2"
+                    className="px-5 py-2.5 rounded-full bg-[#3B2219] border border-[#E5C158]/50 text-[#F5D77F] text-xs uppercase tracking-wider hover:bg-[#4E2A1E] transition-all flex items-center gap-2 shadow-md hover:scale-105"
                   >
-                    <RotateCcw size={14} /> Turn Page ({scrapbookPage + 1}/2)
+                    <RotateCcw size={14} /> Next Page ({(scrapbookPage % config.chapters.friendship.photos.length) + 1}/{config.chapters.friendship.photos.length})
                   </button>
                 </div>
               </div>

@@ -190,7 +190,7 @@ export const StoryChapters: React.FC<StoryChaptersProps> = ({
           </p>
 
           {/* Hanging Photos & Scrapbook Wall */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full my-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 w-full my-3">
             {friendship.photos.map((photo, idx) => (
               <div
                 key={photo.id}
