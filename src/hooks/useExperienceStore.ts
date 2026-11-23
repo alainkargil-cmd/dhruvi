@@ -120,14 +120,18 @@ export function useExperience() {
   const cutCake = useCallback(() => {
     setCakeCut(true);
     soundManager.playCakeCut();
-  }, []);
+    setTimeout(() => {
+      setSliceServed(true);
+      setFireworksKey(prev => prev + 1);
+      changeScene('celebration-fireworks');
+    }, 1400);
+  }, [changeScene]);
 
   const serveCakeSlice = useCallback(() => {
     setSliceServed(true);
     soundManager.playCakeCut();
-    setTimeout(() => {
-      changeScene('celebration-reveal');
-    }, 1200);
+    setFireworksKey(prev => prev + 1);
+    changeScene('celebration-fireworks');
   }, [changeScene]);
 
   const triggerFireworks = useCallback(() => {

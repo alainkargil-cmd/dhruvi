@@ -106,18 +106,18 @@ export const Main3DCanvas: React.FC<Main3DCanvasProps> = ({
               <OrbitControls
                 enablePan={false}
                 enableZoom={true}
-                minDistance={3.2}
-                maxDistance={8}
-                minPolarAngle={Math.PI / 4}
-                maxPolarAngle={Math.PI / 2.1}
+                minDistance={3.0}
+                maxDistance={12}
+                minPolarAngle={Math.PI / 12} // Allow looking straight up into the SkyShots
+                maxPolarAngle={Math.PI / 2.05}
                 dampingFactor={0.05}
                 autoRotate={true}
-                autoRotateSpeed={0.25}
+                autoRotateSpeed={0.2}
               />
 
               {/* Celebration Environment Lighting */}
-              <ambientLight color="#3A1E14" intensity={1.1} />
-              <directionalLight position={[0, 8, 4]} color="#FFE494" intensity={2.0} />
+              <ambientLight color="#522432" intensity={1.6} />
+              <directionalLight position={[0, 9, 5]} color="#FFF3DD" intensity={2.6} />
 
               {/* The 3D Birthday Cake */}
               <BirthdayCake

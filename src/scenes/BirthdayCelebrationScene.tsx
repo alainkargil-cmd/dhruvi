@@ -128,7 +128,7 @@ export const BirthdayCelebrationScene: React.FC<BirthdayCelebrationSceneProps> =
               </motion.div>
             )}
 
-            {/* Step 2: Cut the birthday cake */}
+            {/* Step 2: Cut the birthday cake & Launch SkyShots */}
             {candlesBlown && !cakeCut && (
               <motion.div
                 key="cut"
@@ -138,47 +138,41 @@ export const BirthdayCelebrationScene: React.FC<BirthdayCelebrationSceneProps> =
                 className="flex flex-col items-center p-6 sm:p-8 rounded-3xl fantasy-glass border-2 border-[#E5C158] shadow-[0_0_60px_rgba(229,193,88,0.4)] w-full"
               >
                 <span className="text-[11px] font-serif uppercase tracking-[0.25em] text-[#E5C158] font-bold mb-1 flex items-center gap-1.5">
-                  <Sparkles size={14} className="text-[#FFE494]" /> Step 2: The First Slice
+                  <Sparkles size={14} className="text-[#FFE494]" /> Step 2: Cut The Cake
                 </span>
                 <h3 className="text-2xl sm:text-3xl font-serif font-bold text-[#FAF6F0] mb-2 drop-shadow-md">
                   "May Your Wishes Come True!"
                 </h3>
                 <p className="text-xs text-[#FAF6F0]/90 mb-5 max-w-sm leading-relaxed">
-                  The candles are out! Touch and drag the golden knife across the cake, or press the button to cut the first slice.
+                  The candles are out! Cut the first slice of the birthday cake to launch the celebratory SkyShots into the sky.
                 </p>
                 <button
                   onClick={onCutCake}
-                  className="px-8 py-3.5 rounded-full bg-gradient-to-r from-[#C88A85] to-[#FFE494] text-[#1D0C07] font-serif font-bold text-xs sm:text-sm tracking-wider uppercase flex items-center gap-2 shadow-[0_0_30px_rgba(229,193,88,0.7)] hover:scale-105 active:scale-95 transition-all"
+                  className="px-8 py-3.5 rounded-full bg-gradient-to-r from-[#D4AF37] via-[#FFE494] to-[#E5C158] text-[#1D0C07] font-serif font-bold text-xs sm:text-sm tracking-wider uppercase flex items-center gap-2 shadow-[0_0_35px_rgba(229,193,88,0.8)] hover:scale-105 active:scale-95 transition-all"
                 >
-                  <Utensils size={18} /> Cut The Birthday Cake
+                  <Utensils size={18} /> Cut The Cake & Launch SkyShots 🎆
                 </button>
               </motion.div>
             )}
 
-            {/* Step 3: Serve the first slice & trigger Grand Reveal */}
-            {cakeCut && !sliceServed && (
+            {/* Launching SkyShots feedback */}
+            {cakeCut && (
               <motion.div
-                key="serve"
-                initial={{ opacity: 0, y: 25 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -25 }}
-                className="flex flex-col items-center p-6 sm:p-8 rounded-3xl fantasy-glass border-2 border-[#E5C158] shadow-[0_0_60px_rgba(229,193,88,0.4)] w-full"
+                key="launching"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0 }}
+                className="flex flex-col items-center p-6 sm:p-8 rounded-3xl fantasy-glass border-2 border-[#E5C158] shadow-[0_0_60px_rgba(229,193,88,0.5)] w-full"
               >
-                <span className="text-[11px] font-serif uppercase tracking-[0.25em] text-[#E5C158] font-bold mb-1 flex items-center gap-1.5">
-                  <Sparkles size={14} className="text-[#FFE494]" /> Step 3: Serve & Celebrate
+                <span className="text-[11px] font-serif uppercase tracking-[0.25em] text-[#FFE494] font-bold mb-1 flex items-center gap-1.5 animate-pulse">
+                  <Sparkles size={14} /> SkyShots Soaring High!
                 </span>
                 <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#FFE494] mb-2 drop-shadow-md">
-                  "{celebration.cakeCutText}"
+                  🎂 The Cake is Cut!
                 </h3>
-                <p className="text-xs text-[#FAF6F0]/90 mb-5 max-w-sm leading-relaxed">
-                  The first slice is ready on its golden plate! Tap below to unlock the grand celebration finale.
+                <p className="text-xs text-[#FAF6F0]/90 max-w-sm leading-relaxed">
+                  Look up at the night sky! The celebratory SkyShots are soaring...
                 </p>
-                <button
-                  onClick={onServeSlice}
-                  className="px-8 py-3.5 rounded-full bg-gradient-to-r from-[#D4AF37] via-[#FFE494] to-[#E5C158] text-[#1D0C07] font-serif font-bold text-xs sm:text-sm tracking-wider uppercase flex items-center gap-2 shadow-[0_0_35px_rgba(229,193,88,0.8)] hover:scale-105 active:scale-95 transition-all"
-                >
-                  {celebration.serveSliceText} <ArrowRight size={18} />
-                </button>
               </motion.div>
             )}
           </AnimatePresence>
@@ -186,45 +180,45 @@ export const BirthdayCelebrationScene: React.FC<BirthdayCelebrationSceneProps> =
       )}
 
       {/* ================================================================ */}
-      {/* STAGE 2 & 3: GRAND REVEAL & VIRTUAL FIREWORKS FINALE */}
+      {/* STAGE 2 & 3: GRAND REVEAL & VIRTUAL SKYSHOTS FINALE */}
       {/* ================================================================ */}
       {(currentSubStage === 'reveal' || currentSubStage === 'fireworks') && (
-        <div className="pointer-events-auto flex flex-col items-center text-center max-w-2xl w-full my-auto z-40">
+        <div className="pointer-events-auto flex flex-col items-center text-center max-w-2xl w-full mt-auto mb-6 z-40">
           <motion.div
-            initial={{ opacity: 0, scale: 0.85, y: 30 }}
+            initial={{ opacity: 0, scale: 0.9, y: 30 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 1.2, ease: 'easeOut' }}
-            className="p-8 sm:p-12 rounded-3xl fantasy-glass border-2 border-[#E5C158] shadow-[0_0_80px_rgba(229,193,88,0.5)] flex flex-col items-center"
+            transition={{ duration: 1, ease: 'easeOut' }}
+            className="p-6 sm:p-8 rounded-3xl fantasy-glass border-2 border-[#E5C158] shadow-[0_0_70px_rgba(229,193,88,0.45)] flex flex-col items-center backdrop-blur-xl"
           >
             {/* Main Headline */}
-            <h1 className="text-4xl sm:text-6xl font-serif font-black tracking-wider gold-gradient-text drop-shadow-[0_0_30px_rgba(229,193,88,0.8)] mb-4">
+            <h1 className="text-3xl sm:text-5xl font-serif font-black tracking-wider gold-gradient-text drop-shadow-[0_0_30px_rgba(229,193,88,0.8)] mb-2">
               {celebration.headline}
             </h1>
 
             {/* Subtitle */}
-            <p className="font-script text-2xl sm:text-3xl text-[#FFE494] mb-4">
+            <p className="font-script text-xl sm:text-2xl text-[#FFE494] mb-2">
               "{celebration.subtitle}"
             </p>
 
             {/* Secondary Text */}
-            <p className="font-serif text-sm sm:text-base text-[#FAF6F0]/90 max-w-lg leading-relaxed italic mb-8">
+            <p className="font-serif text-xs sm:text-sm text-[#FAF6F0]/90 max-w-lg leading-relaxed italic mb-5">
               {celebration.secondaryText}
             </p>
 
-            {/* Action Buttons: Replay Fireworks & Final Letter */}
-            <div className="flex flex-wrap items-center justify-center gap-4">
+            {/* Action Buttons: Replay SkyShots & Final Letter */}
+            <div className="flex flex-wrap items-center justify-center gap-3">
               <button
                 onClick={onReplayFireworks}
-                className="px-6 py-3 rounded-full bg-[#3B2219] border border-[#E5C158] text-[#F5D77F] hover:bg-[#4E2A1E] text-xs font-serif tracking-wider uppercase flex items-center gap-2 transition-all shadow-lg hover:scale-105"
+                className="px-5 py-2.5 rounded-full bg-[#3B2219] border border-[#E5C158] text-[#F5D77F] hover:bg-[#4E2A1E] text-xs font-serif tracking-wider uppercase flex items-center gap-2 transition-all shadow-lg hover:scale-105"
               >
-                <RotateCcw size={16} /> {celebration.fireworksReplayText}
+                <RotateCcw size={15} /> Replay SkyShots
               </button>
 
               <button
                 onClick={onOpenLetter}
-                className="px-8 py-3.5 rounded-full bg-gradient-to-r from-[#D4AF37] via-[#FFE494] to-[#E5C158] text-[#1D0C07] font-serif font-bold text-xs sm:text-sm tracking-wider uppercase flex items-center gap-2 shadow-[0_0_30px_rgba(229,193,88,0.8)] hover:scale-105 transition-all"
+                className="px-6 py-2.5 rounded-full bg-gradient-to-r from-[#D4AF37] via-[#FFE494] to-[#E5C158] text-[#1D0C07] font-serif font-bold text-xs uppercase tracking-wider flex items-center gap-2 shadow-[0_0_30px_rgba(229,193,88,0.8)] hover:scale-105 transition-all"
               >
-                <Mail size={16} /> Read Your Final Birthday Letter
+                <Mail size={15} /> Read Final Birthday Letter
               </button>
             </div>
           </motion.div>

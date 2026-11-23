@@ -3,6 +3,17 @@ import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { soundManager } from '../utils/soundEffects';
 
+interface SkyShotRocket {
+  x: number;
+  y: number;
+  z: number;
+  targetY: number;
+  vy: number;
+  color: THREE.Color;
+  type: 'sphere' | 'willow' | 'heart' | 'ring';
+  count: number;
+}
+
 interface FireworkParticle {
   x: number;
   y: number;
@@ -16,6 +27,7 @@ interface FireworkParticle {
   size: number;
   gravity: number;
   decay: number;
+  isTrail?: boolean;
 }
 
 interface FireworksSystemProps {
@@ -30,14 +42,14 @@ export const FireworksSystem: React.FC<FireworksSystemProps> = ({
   replayKey = 0,
 }) => {
   const pointsRef = useRef<THREE.Points>(null);
-  const maxParticles = 4000;
+  const maxParticles = 5000;
   const particles = useRef<FireworkParticle[]>([]);
+  const rockets = useRef<SkyShotRocket[]>([]);
   const startTime = useRef<number>(0);
-  const phaseRef = useRef<number>(1);
   const nameSpawned = useRef<boolean>(false);
   const finaleSpawned = useRef<boolean>(false);
 
-  // Position, Color, and Size Buffers
+  // Position, Color, and Size Buffers for high-performance point cloud
   const [positions, colors, sizes] = useMemo(() => {
     const pos = new Float32Array(maxParticles * 3);
     const col = new Float32Array(maxParticles * 3);
@@ -45,23 +57,45 @@ export const FireworksSystem: React.FC<FireworksSystemProps> = ({
     return [pos, col, sz];
   }, [maxParticles]);
 
-  // Color Palette from Spec
+  // Luxury SkyShot Palette
   const palette = useMemo(() => [
-    new THREE.Color('#FFE494'), // Gold
-    new THREE.Color('#F5D77F'), // Champagne Gold
-    new THREE.Color('#E8B4B8'), // Rose Pink
-    new THREE.Color('#9B8EA9'), // Lavender
-    new THREE.Color('#FFFFFF'), // Warm White
-    new THREE.Color('#88D49E'), // Soft Emerald
-    new THREE.Color('#70A1FF'), // Soft Blue
+    new THREE.Color('#FFE494'), // Imperial Gold
+    new THREE.Color('#FFD166'), // Sunset Amber
+    new THREE.Color('#FF4D80'), // Vivid Rose
+    new THREE.Color('#9B5DE5'), // Royal Lavender
+    new THREE.Color('#00F5D4'), // Celestial Cyan
+    new THREE.Color('#FFFFFF'), // Pure Diamond White
+    new THREE.Color('#FF9F1C'), // Fiery Orange
   ], []);
 
-  // Helper to spawn a shell burst
-  const spawnBurst = (
+  // Launch a realistic SkyShot rocket ascending from the ground
+  const launchSkyShot = (
+    startX: number,
+    startZ: number,
+    targetY: number,
+    color: THREE.Color,
+    type: 'sphere' | 'willow' | 'heart' | 'ring' = 'sphere',
+    count: number = 200
+  ) => {
+    soundManager.playFireworkLaunch();
+    rockets.current.push({
+      x: startX,
+      y: 0.2,
+      z: startZ,
+      targetY,
+      vy: 12 + Math.random() * 4,
+      color,
+      type,
+      count,
+    });
+  };
+
+  // Detonate a SkyShot shell at apex into explosive stars
+  const detonateSkyShot = (
     origin: [number, number, number],
-    type: 'sphere' | 'heart' | 'ring' | 'star' | 'willow',
+    type: 'sphere' | 'willow' | 'heart' | 'ring',
     baseColor: THREE.Color,
-    count: number = 180
+    count: number
   ) => {
     soundManager.playFireworkExplosion();
 
@@ -71,7 +105,7 @@ export const FireworksSystem: React.FC<FireworksSystemProps> = ({
       let vx = 0;
       let vy = 0;
       let vz = 0;
-      const speed = 2.5 + Math.random() * 3.5;
+      const speed = type === 'willow' ? 2.5 + Math.random() * 2.5 : 4.0 + Math.random() * 4.5;
 
       if (type === 'sphere') {
         const u = Math.random();
@@ -84,25 +118,26 @@ export const FireworksSystem: React.FC<FireworksSystemProps> = ({
         vy = r * sinPhi * Math.sin(theta) * speed;
         vz = r * Math.cos(phi) * speed;
       } else if (type === 'heart') {
-        // Parametric Heart Curve in 2D projected to 3D
         const t = Math.random() * Math.PI * 2;
         const hx = 16 * Math.pow(Math.sin(t), 3);
         const hy = 13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t);
-        const spread = (Math.random() - 0.5) * 0.4;
-        vx = (hx / 16) * speed * 0.8;
-        vy = (hy / 16) * speed * 0.8;
+        const spread = (Math.random() - 0.5) * 0.35;
+        vx = (hx / 16) * speed * 0.85;
+        vy = (hy / 16) * speed * 0.85;
         vz = spread * speed;
       } else if (type === 'ring') {
         const angle = Math.random() * Math.PI * 2;
+        const spread = (Math.random() - 0.5) * 0.3;
         vx = Math.cos(angle) * speed;
         vz = Math.sin(angle) * speed;
-        vy = (Math.random() - 0.5) * 0.5;
+        vy = spread * speed;
       } else if (type === 'willow') {
+        // Willow cascading brocade
         const angle = Math.random() * Math.PI * 2;
         const spread = Math.random() * 0.8;
         vx = Math.cos(angle) * spread * speed;
         vz = Math.sin(angle) * spread * speed;
-        vy = Math.random() * 1.5;
+        vy = (Math.random() * 0.6) * speed;
       }
 
       particles.current.push({
@@ -114,85 +149,86 @@ export const FireworksSystem: React.FC<FireworksSystemProps> = ({
         vz,
         color: baseColor.clone(),
         life: 1.0,
-        maxLife: type === 'willow' ? 2.8 : 1.8 + Math.random() * 0.8,
-        size: type === 'willow' ? 0.08 : 0.06,
-        gravity: type === 'willow' ? 0.035 : 0.045,
-        decay: 1.0 / (type === 'willow' ? 2.5 : 1.6),
+        maxLife: type === 'willow' ? 3.2 : 2.0 + Math.random() * 0.8,
+        size: type === 'willow' ? 0.09 : 0.07,
+        gravity: type === 'willow' ? 0.038 : 0.048,
+        decay: 1.0 / (type === 'willow' ? 2.8 : 1.8),
       });
     }
   };
 
-  // Helper to spawn DHRUVI Name in particles
-  const spawnNameFireworks = () => {
+  // Launch SkyShot Constellation forming "D H R U V I" in glowing golden stars
+  const launchNameSkyShot = () => {
     soundManager.playFireworkExplosion();
     const gold = new THREE.Color('#FFE494');
-    const nameY = 8.5;
-    const nameZ = -1.5;
+    const nameY = 8.6;
+    const nameZ = -1.2;
 
-    // Relative letter coordinates for D - H - R - U - V - I
     const letterD = [
-      [-4.0, 0], [-4.0, 0.4], [-4.0, 0.8], [-4.0, 1.2], [-4.0, 1.6],
-      [-3.8, 1.6], [-3.5, 1.4], [-3.3, 0.8], [-3.5, 0.2], [-3.8, 0]
+      [-4.2, 0], [-4.2, 0.4], [-4.2, 0.8], [-4.2, 1.2], [-4.2, 1.6],
+      [-3.9, 1.6], [-3.5, 1.4], [-3.3, 0.8], [-3.5, 0.2], [-3.9, 0]
     ];
     const letterH = [
       [-2.8, 0], [-2.8, 0.4], [-2.8, 0.8], [-2.8, 1.2], [-2.8, 1.6],
-      [-2.1, 0], [-2.1, 0.4], [-2.1, 0.8], [-2.1, 1.2], [-2.1, 1.6],
-      [-2.5, 0.8]
+      [-2.0, 0], [-2.0, 0.4], [-2.0, 0.8], [-2.0, 1.2], [-2.0, 1.6],
+      [-2.4, 0.8]
     ];
     const letterR = [
-      [-1.6, 0], [-1.6, 0.4], [-1.6, 0.8], [-1.6, 1.2], [-1.6, 1.6],
-      [-1.3, 1.6], [-1.0, 1.4], [-1.0, 1.0], [-1.3, 0.8],
-      [-1.1, 0.4], [-0.9, 0]
+      [-1.5, 0], [-1.5, 0.4], [-1.5, 0.8], [-1.5, 1.2], [-1.5, 1.6],
+      [-1.2, 1.6], [-0.9, 1.4], [-0.9, 1.0], [-1.2, 0.8],
+      [-1.0, 0.4], [-0.8, 0]
     ];
     const letterU = [
-      [-0.4, 1.6], [-0.4, 1.2], [-0.4, 0.6], [-0.2, 0.1], [0.1, 0],
-      [0.4, 0.1], [0.6, 0.6], [0.6, 1.2], [0.6, 1.6]
+      [-0.3, 1.6], [-0.3, 1.2], [-0.3, 0.6], [-0.1, 0.1], [0.2, 0],
+      [0.5, 0.1], [0.7, 0.6], [0.7, 1.2], [0.7, 1.6]
     ];
     const letterV = [
-      [1.1, 1.6], [1.3, 1.1], [1.5, 0.6], [1.7, 0.1],
-      [1.9, 0.6], [2.1, 1.1], [2.3, 1.6]
+      [1.2, 1.6], [1.4, 1.1], [1.6, 0.6], [1.8, 0.1],
+      [2.0, 0.6], [2.2, 1.1], [2.4, 1.6]
     ];
     const letterI = [
-      [2.8, 1.6], [3.1, 1.6], [3.4, 1.6],
-      [3.1, 1.2], [3.1, 0.8], [3.1, 0.4],
-      [2.8, 0], [3.1, 0], [3.4, 0]
+      [2.9, 1.6], [3.2, 1.6], [3.5, 1.6],
+      [3.2, 1.2], [3.2, 0.8], [3.2, 0.4],
+      [2.9, 0], [3.2, 0], [3.5, 0]
     ];
 
-    const allLetters = [...letterD, ...letterH, ...letterR, ...letterU, ...letterV, ...letterI];
+    const allCoords = [...letterD, ...letterH, ...letterR, ...letterU, ...letterV, ...letterI];
 
-    allLetters.forEach(([lx, ly]) => {
-      // Spawn multiple dense particles per coordinate point
+    allCoords.forEach(([lx, ly]) => {
       for (let k = 0; k < 6; k++) {
         if (particles.current.length >= maxParticles) break;
         particles.current.push({
           x: lx,
           y: nameY + ly,
-          z: nameZ + (Math.random() - 0.5) * 0.2,
-          vx: (Math.random() - 0.5) * 0.15,
-          vy: (Math.random() - 0.5) * 0.15,
-          vz: (Math.random() - 0.5) * 0.15,
+          z: nameZ + (Math.random() - 0.5) * 0.25,
+          vx: (Math.random() - 0.5) * 0.12,
+          vy: (Math.random() - 0.5) * 0.12,
+          vz: (Math.random() - 0.5) * 0.12,
           color: gold.clone(),
           life: 1.0,
-          maxLife: 3.5,
-          size: 0.1,
-          gravity: 0.005,
-          decay: 0.25,
+          maxLife: 4.2,
+          size: 0.11,
+          gravity: 0.004,
+          decay: 0.22,
         });
       }
     });
   };
 
-  // Reset or initialize when active or replayKey changes
+  // Reset & trigger on active or replayKey change
   useEffect(() => {
     if (active) {
       particles.current = [];
+      rockets.current = [];
       startTime.current = 0;
-      phaseRef.current = 1;
       nameSpawned.current = false;
       finaleSpawned.current = false;
-      soundManager.playFireworkLaunch();
+      // Immediate opening SkyShot rocket
+      launchSkyShot(0, -2, 8.5, palette[0], 'willow', 240);
+      launchSkyShot(-2.5, -1.5, 7.8, palette[2], 'heart', 200);
+      launchSkyShot(2.5, -1.5, 7.8, palette[4], 'sphere', 200);
     }
-  }, [active, replayKey]);
+  }, [active, replayKey, palette]);
 
   useFrame(({ clock }, delta) => {
     if (!active || !pointsRef.current) return;
@@ -202,58 +238,93 @@ export const FireworksSystem: React.FC<FireworksSystemProps> = ({
     }
     const elapsed = clock.getElapsedTime() - startTime.current;
 
-    // --- Choreography Timeline ---
-    // Phase 1 (0s - 4s): Initial golden celebratory bursts
-    if (elapsed < 4 && Math.random() < 0.06) {
+    // =========================================================================
+    // SKYSHOTS CHOREOGRAPHY TIMELINE
+    // =========================================================================
+
+    // Salvo 1 (1s - 5s): High-rising golden and amber SkyShots
+    if (elapsed > 1 && elapsed < 5 && Math.random() < 0.05) {
+      const rx = (Math.random() - 0.5) * 7;
+      const rz = -2 + (Math.random() - 0.5) * 3;
+      const targetY = 7.5 + Math.random() * 2.5;
+      launchSkyShot(rx, rz, targetY, palette[Math.random() > 0.5 ? 0 : 1], 'willow', 180);
+    }
+
+    // Salvo 2 (5s - 9s): Vibrant multi-color peony SkyShots
+    if (elapsed >= 5 && elapsed < 9 && Math.random() < 0.065) {
       const rx = (Math.random() - 0.5) * 8;
-      const ry = 7 + Math.random() * 3;
-      const rz = -2 + (Math.random() - 0.5) * 4;
-      soundManager.playFireworkLaunch();
-      spawnBurst([rx, ry, rz], 'sphere', palette[0], 120);
-    }
-
-    // Phase 2 (4s - 9s): Multi-color bursts (Pink, Lavender, Champagne Gold, White, Blue)
-    if (elapsed >= 4 && elapsed < 9 && Math.random() < 0.08) {
-      const rx = (Math.random() - 0.5) * 9;
-      const ry = 6.5 + Math.random() * 3.5;
-      const rz = -2 + (Math.random() - 0.5) * 5;
+      const rz = -1.8 + (Math.random() - 0.5) * 4;
+      const targetY = 7.0 + Math.random() * 3.0;
       const col = palette[Math.floor(Math.random() * palette.length)];
-      soundManager.playFireworkLaunch();
-      spawnBurst([rx, ry, rz], 'sphere', col, 140);
+      launchSkyShot(rx, rz, targetY, col, 'sphere', 190);
     }
 
-    // Phase 3 (9s - 13s): Special shapes (Heart, Ring, Willow)
-    if (elapsed >= 9 && elapsed < 13 && Math.random() < 0.07) {
+    // Salvo 3 (9s - 13s): Ring & Heart shape SkyShots
+    if (elapsed >= 9 && elapsed < 13 && Math.random() < 0.06) {
       const rx = (Math.random() - 0.5) * 6;
-      const ry = 7.5 + Math.random() * 2;
       const rz = -1.5;
-      const types: ('heart' | 'ring' | 'willow')[] = ['heart', 'ring', 'willow'];
-      const chosenType = types[Math.floor(Math.random() * types.length)];
-      soundManager.playFireworkLaunch();
-      spawnBurst([rx, ry, rz], chosenType, palette[Math.floor(Math.random() * 3)], 160);
+      const targetY = 8.0 + Math.random() * 2.0;
+      const shapes: ('heart' | 'ring')[] = ['heart', 'ring'];
+      launchSkyShot(rx, rz, targetY, palette[2], shapes[Math.floor(Math.random() * shapes.length)], 220);
     }
 
-    // Phase 4 (13s): DHRUVI Name Formation
+    // Salvo 4 (13s): DHRUVI Name Golden Constellation
     if (elapsed >= 13 && !nameSpawned.current) {
       nameSpawned.current = true;
-      spawnNameFireworks();
+      launchNameSkyShot();
     }
 
-    // Phase 5 (17s): Grand Finale Simultaneous Cascades
+    // Salvo 5 (17s): Grand SkyShot Finale Salvo (7 rockets across the horizon)
     if (elapsed >= 17 && !finaleSpawned.current) {
       finaleSpawned.current = true;
-      [-4, 0, 4].forEach((fx) => {
-        spawnBurst([fx, 8.5, -2], 'willow', palette[1], 250);
-        spawnBurst([fx, 7.5, -1], 'heart', palette[2], 180);
+      [-5, -3, -1, 0, 1, 3, 5].forEach((fx, idx) => {
+        setTimeout(() => {
+          launchSkyShot(fx, -2.5, 8.5 + (idx % 2) * 1.0, palette[idx % palette.length], 'willow', 240);
+        }, idx * 180);
       });
     }
 
-    // Auto-complete callback after 22 seconds
-    if (elapsed > 22 && onComplete) {
+    // Auto-complete callback after 24s
+    if (elapsed > 24 && onComplete) {
       onComplete();
     }
 
-    // --- Update Particles Physics & Geometry Buffers ---
+    // =========================================================================
+    // UPDATE ROCKET TRAJECTORIES & EMIT ASCENT SPARKS
+    // =========================================================================
+    for (let r = rockets.current.length - 1; r >= 0; r--) {
+      const rocket = rockets.current[r];
+      rocket.y += rocket.vy * delta;
+
+      // Rocket ascent spark trail
+      if (particles.current.length < maxParticles) {
+        particles.current.push({
+          x: rocket.x + (Math.random() - 0.5) * 0.1,
+          y: rocket.y - 0.15,
+          z: rocket.z + (Math.random() - 0.5) * 0.1,
+          vx: (Math.random() - 0.5) * 0.5,
+          vy: -2.0 - Math.random() * 2.0,
+          vz: (Math.random() - 0.5) * 0.5,
+          color: new THREE.Color('#FFF4CC'),
+          life: 0.6,
+          maxLife: 0.6,
+          size: 0.08,
+          gravity: 0.02,
+          decay: 2.2,
+          isTrail: true,
+        });
+      }
+
+      // Check if rocket reached apex target height
+      if (rocket.y >= rocket.targetY) {
+        detonateSkyShot([rocket.x, rocket.y, rocket.z], rocket.type, rocket.color, rocket.count);
+        rockets.current.splice(r, 1);
+      }
+    }
+
+    // =========================================================================
+    // UPDATE EXPLOSION PARTICLES & GEOMETRY BUFFERS
+    // =========================================================================
     const posAttr = pointsRef.current.geometry.attributes.position as THREE.BufferAttribute;
     const colAttr = pointsRef.current.geometry.attributes.color as THREE.BufferAttribute;
     const szAttr = pointsRef.current.geometry.attributes.size as THREE.BufferAttribute;
@@ -296,8 +367,9 @@ export const FireworksSystem: React.FC<FireworksSystemProps> = ({
       activeCount++;
     }
 
-    // Clear unused slots
+    // Zero out unused slots
     for (let i = activeCount; i < maxParticles; i++) {
+      pArray[i * 3 + 1] = -999;
       sArray[i] = 0;
     }
 
@@ -311,28 +383,22 @@ export const FireworksSystem: React.FC<FireworksSystemProps> = ({
       <bufferGeometry>
         <bufferAttribute
           attach="attributes-position"
-          count={maxParticles}
-          array={positions}
-          itemSize={3}
+          args={[positions, 3]}
         />
         <bufferAttribute
           attach="attributes-color"
-          count={maxParticles}
-          array={colors}
-          itemSize={3}
+          args={[colors, 3]}
         />
         <bufferAttribute
           attach="attributes-size"
-          count={maxParticles}
-          array={sizes}
-          itemSize={1}
+          args={[sizes, 1]}
         />
       </bufferGeometry>
       <pointsMaterial
         size={0.08}
         vertexColors
         transparent
-        opacity={0.9}
+        opacity={0.95}
         blending={THREE.AdditiveBlending}
         depthWrite={false}
       />
