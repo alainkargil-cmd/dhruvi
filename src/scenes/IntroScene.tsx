@@ -72,13 +72,13 @@ Happy Birthday, Dhruvi! ✨`;
   };
 
   return (
-    <div className="relative w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-[#26111C] via-[#381827] to-[#1F0D17] overflow-hidden select-none">
+    <div className="relative w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-[#533144] via-[#663D54] to-[#48283B] overflow-hidden select-none">
       {/* 3D Canvas Background with Floating Magic Feather & Golden Dust Particles */}
       <div className="absolute inset-0 pointer-events-none z-0">
         <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
-          <ambientLight intensity={1.2} color="#FFF2DF" />
-          <pointLight position={[0, 2, 3]} color="#FFE494" intensity={3.0} />
-          <directionalLight position={[-3, 4, 2]} color="#FFAA5E" intensity={1.5} />
+          <ambientLight intensity={1.5} color="#FFF8ED" />
+          <pointLight position={[0, 2, 3]} color="#FFE8A3" intensity={3.5} />
+          <directionalLight position={[-3, 4, 2]} color="#FFC488" intensity={1.8} />
           {/* Magic Golden Feather */}
           <MagicFeather position={[2.2, 0.6, 1.2]} scale={1.35} />
           <AtmosphericParticles count={220} color="#F5D77F" size={0.07} />

@@ -30,10 +30,10 @@ export const GiftRoomScene: React.FC<GiftRoomSceneProps> = ({
         autoRotateSpeed={0.35}
       />
 
-      {/* Gift Room Decorated Floor */}
+      {/* Gift Room Light Polished Cream Marble Floor */}
       <mesh position={[0, -0.05, 0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
         <planeGeometry args={[22, 22]} />
-        <meshStandardMaterial color="#1D0C07" roughness={0.35} metalness={0.2} />
+        <meshStandardMaterial color="#EDE3D5" roughness={0.2} metalness={0.2} />
       </mesh>
 
       {/* Decorative Golden Inlay */}
@@ -47,7 +47,7 @@ export const GiftRoomScene: React.FC<GiftRoomSceneProps> = ({
       <group position={[-2.8, 0, 0.5]}>
         <mesh position={[0, 0.45, 0]}>
           <cylinderGeometry args={[0.7, 0.8, 0.9, 24]} />
-          <meshStandardMaterial color="#2C1810" roughness={0.4} metalness={0.1} />
+          <meshStandardMaterial color="#E4D8C8" roughness={0.3} metalness={0.15} />
         </mesh>
         <mesh position={[0, 0.92, 0]}>
           <cylinderGeometry args={[0.75, 0.75, 0.06, 24]} />
@@ -70,7 +70,7 @@ export const GiftRoomScene: React.FC<GiftRoomSceneProps> = ({
       <group position={[-1.1, 0, -2.2]}>
         <mesh position={[0, 0.45, 0]}>
           <cylinderGeometry args={[0.7, 0.8, 0.9, 24]} />
-          <meshStandardMaterial color="#2C1810" roughness={0.4} metalness={0.1} />
+          <meshStandardMaterial color="#E4D8C8" roughness={0.3} metalness={0.15} />
         </mesh>
         <mesh position={[0, 0.92, 0]}>
           <cylinderGeometry args={[0.75, 0.75, 0.06, 24]} />
@@ -93,7 +93,7 @@ export const GiftRoomScene: React.FC<GiftRoomSceneProps> = ({
       <group position={[1.1, 0, -2.2]}>
         <mesh position={[0, 0.45, 0]}>
           <cylinderGeometry args={[0.7, 0.8, 0.9, 24]} />
-          <meshStandardMaterial color="#2C1810" roughness={0.4} metalness={0.1} />
+          <meshStandardMaterial color="#E4D8C8" roughness={0.3} metalness={0.15} />
         </mesh>
         <mesh position={[0, 0.92, 0]}>
           <cylinderGeometry args={[0.75, 0.75, 0.06, 24]} />
@@ -116,7 +116,7 @@ export const GiftRoomScene: React.FC<GiftRoomSceneProps> = ({
       <group position={[2.8, 0, 0.5]}>
         <mesh position={[0, 0.45, 0]}>
           <cylinderGeometry args={[0.7, 0.8, 0.9, 24]} />
-          <meshStandardMaterial color="#2C1810" roughness={0.4} metalness={0.1} />
+          <meshStandardMaterial color="#E4D8C8" roughness={0.3} metalness={0.15} />
         </mesh>
         <mesh position={[0, 0.92, 0]}>
           <cylinderGeometry args={[0.75, 0.75, 0.06, 24]} />

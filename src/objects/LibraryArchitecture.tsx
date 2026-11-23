@@ -55,13 +55,13 @@ export const LibraryArchitecture: React.FC<LibraryArchitectureProps> = ({
 
   return (
     <group position={[0, 0, 0]}>
-      {/* 1. Grand Polished Parquet Floor */}
+      {/* 1. Grand Polished Honey Oak Parquet Floor */}
       <mesh position={[0, -0.05, 0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
         <planeGeometry args={[26, 26]} />
         <meshStandardMaterial
-          color="#2E1812" // Warm Polished Walnut
-          roughness={0.32}
-          metalness={0.2}
+          color="#D4B38C" // Light Warm Honey Oak Parquet
+          roughness={0.25}
+          metalness={0.15}
         />
       </mesh>
 
@@ -69,30 +69,30 @@ export const LibraryArchitecture: React.FC<LibraryArchitectureProps> = ({
       <mesh position={[0, -0.04, 0]} rotation={[-Math.PI / 2, 0, 0]}>
         <ringGeometry args={[4.8, 5.0, 48]} />
         <meshStandardMaterial
-          color="#D4AF37"
-          metalness={0.7}
-          roughness={0.3}
-          emissive="#B89738"
-          emissiveIntensity={0.2}
+          color="#E5C158"
+          metalness={0.85}
+          roughness={0.2}
+          emissive="#D4AF37"
+          emissiveIntensity={0.25}
         />
       </mesh>
       <mesh position={[0, -0.04, 0]} rotation={[-Math.PI / 2, 0, 0]}>
         <ringGeometry args={[7.8, 8.0, 48]} />
         <meshStandardMaterial
-          color="#D4AF37"
-          metalness={0.7}
-          roughness={0.3}
-          emissive="#B89738"
-          emissiveIntensity={0.15}
+          color="#E5C158"
+          metalness={0.85}
+          roughness={0.2}
+          emissive="#D4AF37"
+          emissiveIntensity={0.2}
         />
       </mesh>
 
-      {/* 2. Back Grand Bookshelf Wall */}
+      {/* 2. Back Grand Bookshelf Wall (Light Neoclassical Ivory Woodwork) */}
       <group position={[0, 4.5, -6.5]}>
         {/* Main Bookshelf Frame */}
         <mesh>
           <boxGeometry args={[14, 9, 1.2]} />
-          <meshStandardMaterial color="#2C1810" roughness={0.6} />
+          <meshStandardMaterial color="#EFE7DA" roughness={0.35} />
         </mesh>
 
         {/* Vertical Partition Pillars */}
@@ -100,8 +100,8 @@ export const LibraryArchitecture: React.FC<LibraryArchitectureProps> = ({
           <mesh key={i} position={[x, 0, 0.65]}>
             <boxGeometry args={[0.3, 9.2, 0.2]} />
             <meshStandardMaterial
-              color="#3B2219"
-              roughness={0.4}
+              color="#DECEBB"
+              roughness={0.35}
               metalness={0.2}
             />
           </mesh>
@@ -112,8 +112,8 @@ export const LibraryArchitecture: React.FC<LibraryArchitectureProps> = ({
           <mesh key={i} position={[0, y, 0.4]}>
             <boxGeometry args={[13.8, 0.15, 0.8]} />
             <meshStandardMaterial
-              color="#3B2219"
-              roughness={0.5}
+              color="#E2D4C3"
+              roughness={0.38}
             />
           </mesh>
         ))}
@@ -169,61 +169,61 @@ export const LibraryArchitecture: React.FC<LibraryArchitectureProps> = ({
         </group>
       </group>
 
-      {/* 3. Left Bookshelf Wall with Arched Window */}
+      {/* 3. Left Bookshelf Wall with Arched Window (Light Ivory Woodwork) */}
       <group position={[-7.5, 4.5, 0]} rotation={[0, Math.PI / 2, 0]}>
         <mesh>
           <boxGeometry args={[13, 9, 1.2]} />
-          <meshStandardMaterial color="#2C1810" roughness={0.6} />
+          <meshStandardMaterial color="#EFE7DA" roughness={0.35} />
         </mesh>
         {/* Arched Window in Center */}
         <mesh position={[0, 1.5, 0.62]}>
           <planeGeometry args={[3.2, 5]} />
           <meshStandardMaterial
-            color="#EAE5DC"
+            color="#FFF8EE"
             emissive="#FFEAB2"
-            emissiveIntensity={0.6}
-            roughness={0.2}
+            emissiveIntensity={0.8}
+            roughness={0.15}
           />
         </mesh>
         {/* Window Mullions / Arches */}
         <mesh position={[0, 1.5, 0.65]}>
           <boxGeometry args={[0.1, 5, 0.05]} />
-          <meshStandardMaterial color="#2C1810" />
+          <meshStandardMaterial color="#CBB8A2" roughness={0.4} />
         </mesh>
         <mesh position={[0, 1.5, 0.65]}>
           <boxGeometry args={[3.2, 0.1, 0.05]} />
-          <meshStandardMaterial color="#2C1810" />
+          <meshStandardMaterial color="#CBB8A2" roughness={0.4} />
         </mesh>
       </group>
 
-      {/* 4. Right Bookshelf Wall */}
+      {/* 4. Right Bookshelf Wall (Light Ivory Woodwork) */}
       <group position={[7.5, 4.5, 0]} rotation={[0, -Math.PI / 2, 0]}>
         <mesh>
           <boxGeometry args={[13, 9, 1.2]} />
-          <meshStandardMaterial color="#2C1810" roughness={0.6} />
+          <meshStandardMaterial color="#EFE7DA" roughness={0.35} />
         </mesh>
         {/* Books on right wall */}
         {[-2, 0, 2].map((y, i) => (
           <mesh key={i} position={[0, y, 0.4]}>
             <boxGeometry args={[11, 0.85, 0.6]} />
-            <meshStandardMaterial color="#3A1E14" roughness={0.7} />
+            <meshStandardMaterial color="#E0D2C0" roughness={0.5} />
           </mesh>
         ))}
       </group>
 
-      {/* 5. Antique Reading Desk (Foreground-Center/Right) */}
+      {/* 5. Antique Reading Desk (Warm Caramel Oak with Gold Accents) */}
       <group position={[2.8, 0, -1.8]}>
         {/* Desk Top */}
         <mesh position={[0, 1.4, 0]}>
           <boxGeometry args={[2.8, 0.12, 1.6]} />
-          <meshStandardMaterial color="#3B2219" roughness={0.3} metalness={0.1} />
+          <meshStandardMaterial color="#C89D6D" roughness={0.25} metalness={0.1} />
         </mesh>
         {/* Desk Legs */}
         {[-1.2, 1.2].map((x, xi) =>
           [-0.65, 0.65].map((z, zi) => (
             <mesh key={`${xi}-${zi}`} position={[x, 0.7, z]}>
               <cylinderGeometry args={[0.07, 0.05, 1.35, 12]} />
-              <meshStandardMaterial color="#26160F" roughness={0.5} />
+              <meshStandardMaterial color="#B08354" roughness={0.35} />
             </mesh>
           ))
         )}

@@ -22,7 +22,7 @@ export const StoryChapters: React.FC<StoryChaptersProps> = ({
   const { childhood, solo, friendship, future } = config.chapters;
 
   return (
-    <div className="relative w-full h-full flex flex-col items-center justify-between p-4 sm:p-8 bg-gradient-to-br from-[#27121E]/95 via-[#351829]/95 to-[#200E19]/95 backdrop-blur-xl overflow-y-auto select-none">
+    <div className="relative w-full h-full flex flex-col items-center justify-between p-4 sm:p-8 bg-gradient-to-br from-[#4D2E3F]/95 via-[#613A4F]/95 to-[#452737]/95 backdrop-blur-xl overflow-y-auto select-none">
       {/* Top Header Navigation */}
       <div className="w-full max-w-4xl flex items-center justify-between mb-4 z-20">
         <button
@@ -59,7 +59,7 @@ export const StoryChapters: React.FC<StoryChaptersProps> = ({
           {/* Golden Frame with Childhood Photo */}
           <div
             onClick={() => onOpenPhoto(childhood.photo)}
-            className="cursor-pointer group relative p-4 sm:p-5 rounded-2xl bg-[#351829] border-2 border-[#E5C158] shadow-[0_0_50px_rgba(229,193,88,0.4)] transition-transform duration-300 hover:scale-[1.02] max-w-xl w-full"
+            className="cursor-pointer group relative p-4 sm:p-5 rounded-2xl bg-[#5C364B] border-2 border-[#E5C158] shadow-[0_0_50px_rgba(229,193,88,0.4)] transition-transform duration-300 hover:scale-[1.02] max-w-xl w-full"
           >
             <div className="relative rounded-xl overflow-hidden bg-black/30 p-1 flex items-center justify-center">
               <img
@@ -113,7 +113,7 @@ export const StoryChapters: React.FC<StoryChaptersProps> = ({
             {/* Left Photo */}
             <div
               onClick={() => onOpenPhoto(solo.photos[1])}
-              className="cursor-pointer group p-3.5 sm:p-4 rounded-2xl bg-[#351829] border border-[#E5C158]/60 shadow-xl hover:scale-105 transition-all flex flex-col items-center"
+              className="cursor-pointer group p-3.5 sm:p-4 rounded-2xl bg-[#5C364B] border border-[#E5C158]/60 shadow-xl hover:scale-105 transition-all flex flex-col items-center"
             >
               <div className="w-full h-80 sm:h-96 rounded-xl overflow-hidden bg-black/25 flex items-center justify-center p-1">
                 <img
@@ -130,7 +130,7 @@ export const StoryChapters: React.FC<StoryChaptersProps> = ({
             {/* Central Main Portrait */}
             <div
               onClick={() => onOpenPhoto(solo.photos[0])}
-              className="cursor-pointer group p-4 sm:p-5 rounded-2xl bg-[#441E34] border-2 border-[#E5C158] shadow-[0_0_40px_rgba(229,193,88,0.45)] hover:scale-105 transition-all md:-translate-y-2 flex flex-col items-center"
+              className="cursor-pointer group p-4 sm:p-5 rounded-2xl bg-[#6B3F56] border-2 border-[#E5C158] shadow-[0_0_40px_rgba(229,193,88,0.45)] hover:scale-105 transition-all md:-translate-y-2 flex flex-col items-center"
             >
               <div className="w-full h-88 sm:h-[420px] rounded-xl overflow-hidden bg-black/25 flex items-center justify-center p-1">
                 <img
@@ -147,7 +147,7 @@ export const StoryChapters: React.FC<StoryChaptersProps> = ({
             {/* Right Photo */}
             <div
               onClick={() => onOpenPhoto(solo.photos[2])}
-              className="cursor-pointer group p-3.5 sm:p-4 rounded-2xl bg-[#351829] border border-[#E5C158]/60 shadow-xl hover:scale-105 transition-all flex flex-col items-center"
+              className="cursor-pointer group p-3.5 sm:p-4 rounded-2xl bg-[#5C364B] border border-[#E5C158]/60 shadow-xl hover:scale-105 transition-all flex flex-col items-center"
             >
               <div className="w-full h-80 sm:h-96 rounded-xl overflow-hidden bg-black/25 flex items-center justify-center p-1">
                 <img
